@@ -1,0 +1,15 @@
+{
+  "name": "@sudokrew/aws-node",
+  "version": "0.0.1",
+  "description": "Sudokrew maintained NodeJS promise based aws-sdk wrappers with logging service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sudokrew",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.361.0",
+    "winston": "^3.1.0"
+  }
+}
