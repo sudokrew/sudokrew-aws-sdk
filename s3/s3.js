@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { logger } = require('../utils');
+const { logger } = require('../services');
 
 let s3 = new AWS.S3({ endpoint: 'http://localstack:4572', region: 'us-west-1', s3ForcePathStyle: true });
 

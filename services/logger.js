@@ -11,4 +11,3 @@ const logger = new winston.Logger({
 });
 
 module.exports = logger;
-
