@@ -1,5 +1,5 @@
-import s3 from './s3';
-import AWS from 'aws-sdk';
+const s3 = require('./s3');
+const AWS = require('aws-sdk');
 
 module.exports = {
   AWS,
