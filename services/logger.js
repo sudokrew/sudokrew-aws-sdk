@@ -1,6 +1,6 @@
 const winston = require('winston');
 
-let logger = winston.createLogger({
+let logger = new winston.Logger({
   transports: [
     new winston.transports.Console({
       colorize: true,
