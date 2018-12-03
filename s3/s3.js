@@ -3,6 +3,7 @@ const { logger } = require('../services');
 
 let s3 = new AWS.S3({ endpoint: 'http://localstack:4572', region: 'us-west-1', s3ForcePathStyle: true });
 
+
 function createBucket(params) {
   const result = s3.createBucket(params).promise()
     .then(data => {
