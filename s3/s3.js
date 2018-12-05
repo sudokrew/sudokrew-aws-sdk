@@ -1,8 +1,19 @@
 const AWS = require('aws-sdk');
 const { logger } = require('../services');
 
-let s3 = new AWS.S3({ endpoint: 'http://localstack:4572', region: 'us-west-1', s3ForcePathStyle: true });
+if (!process.env.AWS_S3_ENDPOINT) {
+  throw new Error('AWS_S3_ENDPOINT environment variable missing');
+} else if (!process.env.AWS_S3_REGION) {
+  throw new Error('AWS_S3_REGION environment variable missing');
+} else if (!process.env.AWS_S3_FORCEPATHSTYLE) {
+  throw new Error('AWS_S3_FORCEPATHSTYLE environment variable missing');
+}
 
+const s3 = new AWS.S3({
+  endpoint: process.env.AWS_S3_ENDPOINT,
+  region: process.env.AWS_S3_REGION,
+  s3ForcePathStyle: process.env.AWS_S3_FORCEPATHSTYLE
+});
 
 function createBucket(params) {
   const result = s3.createBucket(params).promise()

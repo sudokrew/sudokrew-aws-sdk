@@ -1,7 +1,11 @@
 const { SQS } = require('aws-sdk');
 const { logger } = require('../services');
 
-const sqs = new SQS({ endpoint: 'http://localstack:4576' });
+if (!process.env.AWS_SQS_ENDPOINT) {
+  throw new Error('AWS_SQS_ENDPOINT environment variable missing');
+}
+
+const sqs = new SQS({ endpoint: process.env.AWS_SQS_ENDPOINT });
 
 function getQueueUrl(queueName) {
 
