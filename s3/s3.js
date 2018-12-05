@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const { logger } = require('../services');
+const errorHandler = require('../services/errorHandler');
 
 if (!process.env.AWS_S3_ENDPOINT) {
   throw new Error('AWS_S3_ENDPOINT environment variable missing');
@@ -23,8 +24,7 @@ function createBucket(params) {
       return true;
     })
     .catch(err => {
-      logger.error(`Error creating S3 bucket ${params.Bucket} \nError: ${err}`);
-      return false;
+      errorHandler.getS3Error(err);
     });
 
   return result;
@@ -37,8 +37,7 @@ function bucketExists(params) {
       return true;
     })
     .catch(err => {
-      logger.debug(`Bucket ${params.Bucket} does not exist`);
-      return false;
+      errorHandler.getS3Error(err);
     });
 
   return result;
@@ -51,7 +50,7 @@ function listBuckets() {
       return data;
     })
     .catch(err => {
-      logger.error(`Could not retreive bucket list. \n Error: ${err}`);
+      errorHandler.getS3Error(err);
     });
 
   return result;
@@ -65,7 +64,7 @@ function putObject(params) {
       return data;
     })
     .catch(err => {
-      logger.error(`Error writing data to S3 target: ${err}`);
+      errorHandler.getS3Error(err);
     });
 
   return result;
