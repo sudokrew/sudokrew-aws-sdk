@@ -19,8 +19,7 @@ const s3 = new AWS.S3({
 function createBucket(params) {
   const result = s3.createBucket(params).promise()
     .then(data => {
-      logger.debug(data);
-      logger.info(`Successful creation of S3 bucket ${params.Bucket}`);
+      logger.debug(`Successful creation of S3 bucket ${params.Bucket}`);
       return true;
     })
     .catch(err => {
@@ -59,7 +58,6 @@ function listBuckets() {
 function putObject(params) {
   const result = s3.putObject(params).promise()
     .then(data => {
-      logger.info(`Successful write to S3 key: ${params.Key}`);
       logger.debug(`Successful write to S3 key: ${params.Key}\n Payload: ${params.payload}`);
       return data;
     })
