@@ -1,6 +1,15 @@
 const { SQS } = require('aws-sdk');
 const { logger } = require('../services');
-const errorHandler = require('../services/errorHandler');
+const {
+  CommonError,
+  NonExistentQueueError,
+  QueueDeletedRecentlyError,
+  QueueAlreadyExistsError,
+  OverLimitError,
+  InvalidIdFormatError,
+  ReceiptHandleIsInvalidError,
+  UnsupportedOperationError,
+  InvalidMessageContentsError } = require('../services/errorHandler');
 
 if (!process.env.AWS_SQS_ENDPOINT) {
   throw new Error('AWS_SQS_ENDPOINT environment variable missing');
@@ -20,7 +29,12 @@ function getQueueUrl(queueName) {
       return data.QueueUrl;
     })
     .catch(err => {
-      errorHandler.getSqsError(err);
+      if (err.code == 'AWS.SimpleQueueService.NonExistentQueue') {
+        throw new NonExistentQueueError(err.code, err.description, err.stack);
+      }
+      else {
+        throw new CommonError(err.code, err.description, err.stack);
+      }
     });
 
   return result;
@@ -34,7 +48,15 @@ function createQueue(params) {
       return data.QueueUrl;
     })
     .catch(err => {
-      errorHandler.getSqsError(err);
+      if (err.code == 'AWS.SimpleQueueService.QueueDeletedRecently') {
+        throw new QueueDeletedRecentlyError(err.code, err.description, err.stack);
+      }
+      else if (err.code == 'QueueAlreadyExists') {
+        throw new QueueAlreadyExistsError(err.code, err.description, err.stack);
+      }
+      else {
+        throw new CommonError(err.code, err.description, err.stack);
+      }
     });
 
   return result;
@@ -52,7 +74,12 @@ function receiveMessage(params) {
       return [];
     })
     .catch(err => {
-      errorHandler.getSqsError(err);
+      if (err.code == 'OverLimit') {
+        throw new OverLimitError(err.code, err.description, err.stack);
+      }
+      else {
+        throw new CommonError(err.code, err.description, err.stack);
+      }
     });
 
   return result;
@@ -66,9 +93,16 @@ function deleteMessage(params) {
       return data.RequestId;
     })
     .catch(err => {
-      errorHandler.getSqsError(err);
+      if (err.code == 'InvalidIdFormat') {
+        throw new InvalidIdFormatError(err.code, err.description, err.stack);
+      }
+      else if (err.code == 'ReceiptHandleIsInvalid') {
+        throw new ReceiptHandleIsInvalidError(err.code, err.description, err.stack);
+      }
+      else {
+        throw new CommonError(err.code, err.description, err.stack);
+      }
     });
-
   return result;
 }
 
@@ -79,9 +113,16 @@ function sendMessage(params) {
       return data.QueueUrl;
     })
     .catch(err => {
-      errorHandler.getSqsError(err);
+      if (err.code == 'AWS.SimpleQueueService.UnsupportedOperation') {
+        throw new UnsupportedOperationError(err.code, err.description, err.stack);
+      }
+      else if (err.code == 'InvalidMessageContents') {
+        throw new InvalidMessageContentsError(err.code, err.description, err.stack);
+      }
+      else {
+        throw new CommonError(err.code, err.description, err.stack);
+      }
     });
-
   return result;
 }
 
