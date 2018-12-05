@@ -1,3 +1,3 @@
-import sqs from './sqs';
+const sqs = require('./sqs');
 
 module.exports = sqs;
