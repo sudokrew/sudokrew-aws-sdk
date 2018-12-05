@@ -7,6 +7,8 @@ function getSqsError(err) {
     throw new Error(`The specified queue doesn't exist (AWS.SimpleQueueService.NonExistentQueue) - HTTP Status Code: 400`)
   } else if (err) {
     throw new Error(err);
+  } else {
+    throw new Error(null);
   }
 }
 
