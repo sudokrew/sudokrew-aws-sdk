@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - "4567-4584:4567-4584"
+      - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
+    environment:
+      - HOSTNAME=localstack
+      - HOSTNAME_EXTERNAL=localstack
+      - SERVICES=${SERVICES- }
+      - DEBUG=${DEBUG- }
+      - DATA_DIR=${DATA_DIR- }
+      - PORT_WEB_UI=${PORT_WEB_UI-8080 }
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "/private/tmp/localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localstack:8080"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    env_file:
+      - .env
+    networks:
+      - bpe-network
+
+  sdk:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    command: ["run", "dev"]
+    volumes:
+      - ".:/app"
+    networks:
+      - bpe-network
+
+networks:
+  bpe-network:

@@ -3,11 +3,10 @@ chai.should();
 
 const s3Service = require('../s3');
 const ssService = require('../sqs');
-
 describe('Connect to s3', () => {
 
   console.log('test');
-
+  console.log('watch me now')
 
 })
 
