@@ -8,8 +8,8 @@
     "npm": "6.0.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
-    "dev": "./node_modules/.bin/mocha --watch"
+    "test": "mocha",
+    "dev": "./node_modules/.bin/nodemon -w . -d 0 --exec mocha -w --recursive"
   },
   "author": "Sudokrew",
   "license": "ISC",
