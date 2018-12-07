@@ -5,8 +5,6 @@ LABEL MAINTAINER=sudokrew/devops
 
 # Run updates and install deps
 RUN apk update && apk upgrade
-
-FROM alpine:latest as development
 RUN set -x \
  && apk add --update --no-cache \
     bash \
