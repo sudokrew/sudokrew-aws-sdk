@@ -11,11 +11,13 @@ const {
   UnsupportedOperationError,
   InvalidMessageContentsError } = require('../services/errorHandler');
 
-if (!process.env.AWS_SQS_ENDPOINT) {
+const { AWS_SQS_ENDPOINT } = require('../config/config.js');
+
+if (!AWS_SQS_ENDPOINT) {
   throw new Error('AWS_SQS_ENDPOINT environment variable missing');
 }
 
-const sqs = new SQS({ endpoint: process.env.AWS_SQS_ENDPOINT });
+const sqs = new SQS({ endpoint: AWS_SQS_ENDPOINT });
 
 function getQueueUrl(queueName) {
 
