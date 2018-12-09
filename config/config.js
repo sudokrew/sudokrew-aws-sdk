@@ -7,4 +7,6 @@ const opts = {
 
 const awsConfig = AWS.config.update(opts);
 
+console.log(awsConfig, 'aws config from sdk');
+
 module.exports = awsConfig;
