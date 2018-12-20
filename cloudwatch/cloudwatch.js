@@ -20,6 +20,20 @@ class CloudwatchWrapper {
 
     return result;
   }
+
+  sendCustomCountMetric(namespace, metricName, value){
+      const customMetricObj = {
+        Namespace: namespace,
+        MetricData: [
+          {
+            MetricName: metricName,
+            Timestamp: new Date(),
+            Value: value
+          }
+        ]
+      }
+      return this.putMetricData(customMetricObj)
+  }
 }
 
 module.exports = CloudwatchWrapper;
