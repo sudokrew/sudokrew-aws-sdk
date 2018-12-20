@@ -9,6 +9,7 @@ class CloudwatchWrapper {
   }
 
   putMetricData(metricObj) {
+    
     const result = this.cloudwatch.putMetricData(metricObj).promise()
       .then(data => {
         logger.debug(`Successful message sent to CloudWatch ${metricObj}`);
@@ -22,17 +23,19 @@ class CloudwatchWrapper {
   }
 
   sendCustomCountMetric(namespace, metricName, value){
-      const customMetricObj = {
-        Namespace: namespace,
-        MetricData: [
-          {
-            MetricName: metricName,
-            Timestamp: new Date(),
-            Value: value
-          }
-        ]
-      }
-      return this.putMetricData(customMetricObj)
+
+    const customMetricObj = {
+      Namespace: namespace,
+      MetricData: [
+        {
+          MetricName: metricName,
+          Timestamp: new Date(),
+          Value: value
+        }
+      ]
+    }
+
+    return this.putMetricData(customMetricObj);
   }
 }
 
