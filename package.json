@@ -1,5 +1,5 @@
 {
-  "name": "@sudokrew/aws-node",
+  "name": "sudokrew-aws-sdk",
   "version": "0.0.1",
   "description": "Sudokrew maintained NodeJS promise based aws-sdk wrappers with logging service",
   "main": "index.js",
