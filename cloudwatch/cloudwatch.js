@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const { CloudWatch } = require('aws-sdk');
 const { logger } = require('../services');
 const { CommonError } = require('../services/errorHandler');
 

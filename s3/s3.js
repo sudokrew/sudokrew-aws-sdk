@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const { S3 } = require('aws-sdk');
 const { logger } = require('../services');
 const { CommonError } = require('../services/errorHandler');
 
