@@ -28,6 +28,9 @@ class S3Wrapper {
         return true;
       })
       .catch(err => {
+        if (err === 'NotFound') {
+          throw new BucketNotFoundError(err.code, err.description, err.stack);
+        }
         throw new CommonError(err.code, err.description, err.stack);
       });
 
