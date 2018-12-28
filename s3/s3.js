@@ -28,6 +28,8 @@ class S3Wrapper {
         return true;
       })
       .catch(err => {
+        logger.debug(`Bucket Exists Error: ${err}`);
+
         if (err === 'NotFound') {
           throw new BucketNotFoundError(err.code, err.description, err.stack);
         }
