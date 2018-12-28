@@ -78,6 +78,14 @@ function InvalidMessageContentsError(name, message, stack) {
 
 InvalidMessageContentsError.prototype = new Error;
 
+function BucketNotFoundError(name, message, stack) {
+  this.name = name;
+  this.message = message;
+  this.stack = stack;
+}
+
+BucketNotFoundError.prototype = new Error;
+
 module.exports = {
   CommonError,
   NonExistentQueueError,
@@ -87,5 +95,6 @@ module.exports = {
   InvalidIdFormatError,
   ReceiptHandleIsInvalidError,
   UnsupportedOperationError,
-  InvalidMessageContentsError
+  InvalidMessageContentsError,
+  BucketNotFoundError
 }
