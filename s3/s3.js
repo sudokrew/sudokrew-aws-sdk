@@ -1,6 +1,6 @@
 const { S3 } = require('aws-sdk');
 const { logger } = require('../services');
-const { CommonError } = require('../services/errorHandler');
+const { CommonError, BucketNotFoundError } = require('../services/errorHandler');
 
 class S3Wrapper {
 
@@ -30,7 +30,7 @@ class S3Wrapper {
       .catch(err => {
         logger.debug(`Bucket Exists Error: ${err}`);
 
-        if (err.code === 'NotFound') {
+        if (err == 'NotFound' || err.code === 'NotFound') {
           throw new BucketNotFoundError(err.code, err.description, err.stack);
         }
         throw new CommonError(err.code, err.description, err.stack);
