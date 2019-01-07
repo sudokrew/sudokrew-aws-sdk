@@ -1,9 +1,13 @@
+const AWS = require('aws-sdk');
 const sqs = require('./sqs');
 const s3 = require('./s3');
-const aws = require('aws-sdk');
+const cloudwatch = require('./cloudwatch');
+const ErrorTypes = require('./services/errorHandler')
 
 module.exports = {
-  aws,
+  AWS,
   sqs,
-  s3
+  s3,
+  cloudwatch,
+  ErrorTypes
 }
