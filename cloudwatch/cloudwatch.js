@@ -24,7 +24,7 @@ class CloudwatchWrapper {
 
   putMetricAlarm(alarmParams) {
     
-    const result = this.cloudwatch.putMetricAlarm()
+    const result = this.cloudwatch.putMetricAlarm(alarmParams).promise()
       .then(data => {
         logger.debug(`Successful alarm ${JSON.stringify(data)} send to CloudWatch: ${JSON.stringify(alarmParams)}`)
       })
