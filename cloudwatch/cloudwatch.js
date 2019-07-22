@@ -39,6 +39,17 @@ class CloudwatchWrapper {
     return result;
   }
 
+  enableAlarmActions(paramsEnableAlarmAction) {
+    const result = this.cloudwatch.enableAlarmActions(paramsEnableAlarmAction).promise()
+      .then(data => {
+      logger.debug(`Alarm: ${JSON.stringify(paramsEnableAlarmAction)} enabled. Response: ${JSON.stringify(data)}`)
+      })
+      .catch(err => {
+        throw new CommonError(err)
+      })
+    return result
+  }
+
   sendCustomCountMetric(namespace, metricName, value) {
 
     const customMetricObj = {
@@ -57,7 +68,7 @@ class CloudwatchWrapper {
 
   setAlarmState(alarmState) {
 
-    const result = this.cloudwatch.setAlarmState.promise()
+    const result = this.cloudwatch.setAlarmState(alarmState).promise()
       .then(data => {
         logger.debug(`Sucessful alarm ${JSON.stringify(data)} set in CloudWatch: ${JSON.stringify(alarmState)}`)
       })
