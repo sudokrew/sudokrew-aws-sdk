@@ -12,7 +12,7 @@ class CloudwatchWrapper {
     
     const result = this.cloudwatch.putMetricData(metricObj).promise()
       .then(data => {
-        logger.debug(`Successful message ${data} sent to CloudWatch: ${JSON.stringify(metricObj)}`);
+        logger.debug(`Successful message ${JSON.stringify(data)} sent to CloudWatch: ${JSON.stringify(metricObj)}`);
         return;
       })
       .catch(err => {
@@ -26,7 +26,7 @@ class CloudwatchWrapper {
     
     const result = this.cloudwatch.putMetricAlarm.promise()
       .then(data => {
-        logger.debug(`Successful alarm ${data} send to CloudWatch: ${JSON.stringify(alarmParams)}`)
+        logger.debug(`Successful alarm ${JSON.stringify(data)} send to CloudWatch: ${JSON.stringify(alarmParams)}`)
       })
       .catch(err => {
         if (err.code == 'AWS.Cloudwatch.LimitExceeded') {
@@ -59,7 +59,7 @@ class CloudwatchWrapper {
 
     const result = this.cloudwatch.setAlarmState.promise()
       .then(data => {
-        logger.debug(`Sucessful alarm ${data} set in CloudWatch: ${JSON.stringify(alarmState)}`)
+        logger.debug(`Sucessful alarm ${JSON.stringify(data)} set in CloudWatch: ${JSON.stringify(alarmState)}`)
       })
       .catch(err => {
         if (err.code == 'AWS.Cloudwatch.InvalidFormat') {
