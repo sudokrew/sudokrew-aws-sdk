@@ -1,6 +1,6 @@
 const { CloudWatch } = require('aws-sdk');
 const { logger } = require('../services');
-const { CommonError } = require('../services/errorHandler');
+const { CommonError, InvalidFormatError, ResourceNotFoundError, LimitExceededError } = require('../services/errorHandler');
 
 class CloudwatchWrapper {
 
@@ -17,7 +17,7 @@ class CloudwatchWrapper {
       })
       .catch(err => {
         throw new CommonError(err.code, err.description, err.stack);
-      });
+      })
 
     return result;
   }
@@ -29,7 +29,11 @@ class CloudwatchWrapper {
         logger.debug(`Successful alarm ${data} send to CloudWatch: ${JSON.stringify(alarmParams)}`)
       })
       .catch(err => {
-        throw new CommonError(err)
+        if (err.code == 'AWS.Cloudwatch.LimitExceeded') {
+          throw new LimitExceededError(err.code, err.description, err.stack)
+        } else {
+          throw new CommonError(err)
+        }
       })
     
     return result;
@@ -47,7 +51,7 @@ class CloudwatchWrapper {
         }
       ]
     }
-
+    
     return this.putMetricData(customMetricObj);
   }
 
@@ -55,10 +59,16 @@ class CloudwatchWrapper {
 
     const result = this.cloudwatch.setAlarmState.promise()
       .then(data => {
-      logger.debug(`Sucessful alarm ${data} set in CloudWatch: ${JSON.stringify(alarmState)}`)
+        logger.debug(`Sucessful alarm ${data} set in CloudWatch: ${JSON.stringify(alarmState)}`)
       })
       .catch(err => {
-      throw new CommonError(err)
+        if (err.code == 'AWS.Cloudwatch.InvalidFormat') {
+          throw new InvalidFormatError(err.code, err.description, err.stack)
+        } else if (err.code == 'AWS.Cloudwatch.ResourceNotFound') {
+          throw new ResourceNotFoundError(err.code, err.description, err.stack)
+        } else {
+          throw new CommonError(err)
+        }
       })
     
     return result;
