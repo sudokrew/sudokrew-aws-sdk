@@ -39,17 +39,6 @@ class CloudwatchWrapper {
     return result;
   }
 
-  enableAlarmActions(paramsEnableAlarmAction) {
-    const result = this.cloudwatch.enableAlarmActions(paramsEnableAlarmAction).promise()
-      .then(data => {
-      logger.debug(`Alarm: ${JSON.stringify(paramsEnableAlarmAction)} enabled. Response: ${JSON.stringify(data)}`)
-      })
-      .catch(err => {
-        throw new CommonError(err)
-      })
-    return result
-  }
-
   sendCustomCountMetric(namespace, metricName, value) {
 
     const customMetricObj = {
