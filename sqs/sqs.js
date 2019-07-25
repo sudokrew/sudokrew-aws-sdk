@@ -66,7 +66,6 @@ class SQSPromiseWrapper {
 
     const result = this.sqs.receiveMessage(params).promise()
       .then(data => {
-        logger.debug(`Message received from queue is: ${JSON.stringify(data)}`);
         if (data.Messages) {
           return data.Messages;
         }
