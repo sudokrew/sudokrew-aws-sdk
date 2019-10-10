@@ -86,6 +86,30 @@ function BucketNotFoundError(name, message, stack) {
 
 BucketNotFoundError.prototype = new Error;
 
+function InvalidFormatError(name, message, stack) {
+  this.name = name;
+  this.message = message;
+  this.stack = stack;
+}
+
+InvalidFormatError.prototype = new Error;
+
+function ResourceNotFoundError(name, message, stack) {
+  this.name = name;
+  this.message = message;
+  this.stack = stack;
+}
+
+ResourceNotFoundError.prototype = new Error;
+
+function LimitExceededError(name, message, stack) {
+  this.name = name;
+  this.message = message;
+  this.stack = stack;
+}
+
+LimitExceededError.prototype = new Error;
+
 module.exports = {
   CommonError,
   NonExistentQueueError,
@@ -96,5 +120,8 @@ module.exports = {
   ReceiptHandleIsInvalidError,
   UnsupportedOperationError,
   InvalidMessageContentsError,
-  BucketNotFoundError
+  BucketNotFoundError,
+  InvalidFormatError,
+  ResourceNotFoundError,
+  LimitExceededError
 }
