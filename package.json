@@ -13,7 +13,7 @@
   "author": "Sudokrew",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.361.0",
+    "aws-sdk": "^2.814.0",
     "winston": "2.4.1"
   }
 }
